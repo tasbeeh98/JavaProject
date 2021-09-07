@@ -1,12 +1,17 @@
 package com.htu.Project.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="Employee")
-public class Employee {
+public class Employee  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +20,17 @@ public class Employee {
 	private String phoneNumber;
 	private String email;
 	
+	@ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	@JoinColumn(name="dep_id")
+	//@JsonIgnore
+	private Department department;
+	
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -27,14 +43,12 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -46,8 +60,7 @@ public class Employee {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
-	}
-	
+	}	
 	public Employee() {
 	}
 }

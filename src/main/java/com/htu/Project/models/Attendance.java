@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity(name="Attendance")
 public class Attendance {
@@ -13,10 +18,27 @@ public class Attendance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonDeserialize(using = SqlTimeDeserializer.class)
 	private Time arrival;
+	
+	@JsonFormat(pattern = "HH:mm:ss")
+	@JsonDeserialize(using = SqlTimeDeserializer.class)
 	private Time departure;
+	
 	private Date dayDate;
 	
+	@OneToOne
+	@JoinColumn(name="employee_id", referencedColumnName="id")
+	private Employee employee;
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 	public Integer getId() {
 		return id;
 	}
