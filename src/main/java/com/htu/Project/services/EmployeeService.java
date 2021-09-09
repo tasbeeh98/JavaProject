@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import com.htu.Project.dtos.DepartmentDto;
-import com.htu.Project.models.Attendance;
 import com.htu.Project.models.Department;
 import com.htu.Project.models.Employee;
 import com.htu.Project.repositories.DepartmentRepository;

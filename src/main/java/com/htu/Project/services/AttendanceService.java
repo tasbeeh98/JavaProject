@@ -1,17 +1,12 @@
 package com.htu.Project.services;
 
-import java.util.Optional;
-
+import java.sql.Time;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.htu.Project.models.Attendance;
-import com.htu.Project.models.Department;
 import com.htu.Project.models.Employee;
 import com.htu.Project.repositories.AttendanceRepository;
-import com.htu.Project.repositories.EmployeeRepository;
 
 @Service
 public class AttendanceService {
@@ -27,9 +22,13 @@ public class AttendanceService {
 		attendance.setEmployee(employee);
 		return attendanceRepository.save(attendance);
 	}
-	public Attendance update( Integer id, Attendance attendance ) {
+	public Time update( Integer id, Attendance attendance ) {
 		attendanceRepository.addLeave(id,attendance.getDeparture(),attendance.getDayDate());
-		return attendance;
+		return attendance.getDeparture();
+	}
+	
+	public List<Attendance> getAttendanceEmployeeById(Integer id) {
+		return attendanceRepository.findByEmployeeId(id);
 	}
 }
 

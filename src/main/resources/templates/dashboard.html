@@ -2,33 +2,67 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Side Navigation Bar</title>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<title>Dash Board</title>
 	<link rel="stylesheet" href="css/dashboard.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+	<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/dashboard}]]";
+    }
+</script>
 </head>
 <body>
 
 <div class="wrapper">
     <div class="sidebar">
-        <h2>Sidebar</h2>
+        <h2>Dash Board</h2>
         <ul>
             <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
-            <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
-            <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
-            <li><a href="#"><i class="fas fa-project-diagram"></i>portfolio</a></li>
-            <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
-            <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
-            <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
+            <li><a th:href = "@{/showNewEmployeeForm}"><i class="fas fa-user"></i>Add Employee</a></li>
+            <li><a href="#"><i class="fas fa-address-card"></i>Attendance</a></li>
+            <li><a href="#"><i class="fas fa-project-diagram"></i>Days Off</a></li>
+            <li><a href="#"><i class="fas fa-blog"></i>Accounts</a></li>
+            <li><a href="#"><i class="fas fa-address-book"></i>Department</a></li>
+            <li><a href="#"><i class="fas fa-map-pin"></i>Reports</a></li>
         </ul> 
         
     </div>
     <div class="main_content">
-        <div class="header">Welcome!! Have a nice day.</div>  
+        <div class="header"><h1>Employee Management System</h1></div>  
         <div class="info">
-          <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
-          <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
-          <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A sed nobis ut exercitationem atque accusamus sit natus officiis totam blanditiis at eum nemo, nulla et quae eius culpa eveniet voluptatibus repellat illum tenetur, facilis porro. Quae fuga odio perferendis itaque alias sint, beatae non maiores magnam ad, veniam tenetur atque ea exercitationem earum eveniet totam ipsam magni tempora aliquid ullam possimus? Tempora nobis facere porro, praesentium magnam provident accusamus temporibus! Repellendus harum veritatis itaque molestias repudiandae ea corporis maiores non obcaecati libero, unde ipsum consequuntur aut consectetur culpa magni omnis vero odio suscipit vitae dolor quod dignissimos perferendis eos? Consequuntur!</div>
-      </div>
+	
+	<form th:action="@{/}">
+    Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+    &nbsp;
+    <input type="submit" value="Search" />
+    &nbsp;
+    <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+
+
+<hr/>
+	
+		<table border="1" class = "table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Phone Number</th>
+					<th>Email</th>
+					<th> Actions </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="employee : ${employees}">
+					<td th:text="${employee.name}"></td>
+					<td th:text="${employee.phoneNumber}"></td>										
+					<td th:text="${employee.email}"></td>
+					<td> <a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}" class="btn btn-primary">Update</a>
+					    <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}" class="btn btn-danger">Delete</a>
+					</td>
+			</tbody>
+		</table>
+		
+		</form></div>
     </div>
 </div>
 
