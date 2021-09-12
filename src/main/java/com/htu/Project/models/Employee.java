@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity(name="Employee")
 public class Employee  {
 	
@@ -20,6 +23,7 @@ public class Employee  {
 	private String email;
 	
 	@ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="dep_id")
 	//@JsonIgnore
 	private Department department;

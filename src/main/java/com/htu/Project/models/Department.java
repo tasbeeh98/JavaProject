@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="Department")
@@ -18,7 +22,8 @@ public class Department {
 	private Integer id;
 	private String name;
 	
-	@OneToMany(mappedBy= "department" , fetch = FetchType.LAZY , cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy= "department" , fetch = FetchType.LAZY , cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private List<Employee> employees;
 	

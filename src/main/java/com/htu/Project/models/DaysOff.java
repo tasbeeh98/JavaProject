@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Embeddable
 @Entity(name="days_off")
 public class DaysOff {
@@ -18,10 +22,12 @@ public class DaysOff {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String status;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dayDate;
 	private String description;
 	
-	@OneToOne
+	@OneToOne()
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="employee_id", referencedColumnName="id")
 	private Employee employee;
 

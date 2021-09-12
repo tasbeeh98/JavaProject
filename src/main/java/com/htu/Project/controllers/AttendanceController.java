@@ -30,8 +30,13 @@ public class AttendanceController {
 	}
 	
 	@GetMapping(value="/attendance/{id}")
-	public @ResponseBody List<Attendance> getStudent(@PathVariable Integer id) {
+	public @ResponseBody List<Attendance> getAttendanceById(@PathVariable Integer id) {
 		return attendanceService.getAttendanceEmployeeById(id);
+	}
+	
+	@GetMapping(value="/attendance")
+	public @ResponseBody List<Attendance> getAllAttendance() {
+		return attendanceService.getAllAttendance();
 	}
 
 }

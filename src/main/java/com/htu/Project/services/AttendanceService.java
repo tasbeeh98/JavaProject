@@ -30,5 +30,16 @@ public class AttendanceService {
 	public List<Attendance> getAttendanceEmployeeById(Integer id) {
 		return attendanceRepository.findByEmployeeId(id);
 	}
+	
+	public List<Attendance> getAllAttendance() {
+		return attendanceRepository.findAll();
+	}
+	
+	public List<Attendance> listAll(String keyword) {
+        if (keyword != null) {
+            return attendanceRepository.searchAttendance(keyword);	            
+        }
+        return attendanceRepository.findAll();
+ }
 }
 

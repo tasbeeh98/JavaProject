@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.htu.Project.models.Attendance;
+import com.htu.Project.models.DaysOff;
 import com.htu.Project.models.Employee;
+import com.htu.Project.services.AttendanceService;
+import com.htu.Project.services.DaysOffService;
 import com.htu.Project.services.EmployeeService;
 
 @Controller
@@ -16,6 +20,12 @@ public class HomePageController {
 	
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	DaysOffService daysOFfService;
+	
+	@Autowired
+	AttendanceService attendanceService;
 	
 	@GetMapping("/home-home")
 	public String getAllEmployees(Model model) {
@@ -29,6 +39,13 @@ public class HomePageController {
 		List <Employee>  employee =employeeService.getAllEmployee();
 		model.addAttribute("employees", employee);
 		return "dashboard";
+	}
+	
+	@GetMapping("/all-attendance")
+	public String getEmployeeAttendance(Model model) {
+		List <Attendance>  attendance =attendanceService.getAllAttendance();
+		model.addAttribute("attendances", attendance);
+		return "attendance";
 	}
 	
 	@GetMapping("/showNewEmployeeForm")
@@ -54,7 +71,7 @@ public class HomePageController {
 	@GetMapping("/deleteEmployee/{id}")
 	public String deleteEmployee(@PathVariable Integer id) { 
 		this.employeeService.deleteEmployeeById(id);
-		return "redirect:/home";
+		return "redirect:/dashboard";
 	}
 
 	@GetMapping("/login")
@@ -62,16 +79,49 @@ public class HomePageController {
 		return "login";
 	}
 	
-//	@GetMapping("/dashboard")
-//	public String dashboard() {
-//		return "dashboard";
-//	}
-	
 	@GetMapping("/")
-	    public String viewHomePage(Model model, @Param("keyword") String keyword) {
-	        List<Employee> employee = employeeService.listAll(keyword);
-	        model.addAttribute("employees", employee);
-	        model.addAttribute("keyword", keyword);	         
-	        return "dashboard";
+	public String viewHomePage(Model model, @Param("keyword") String keyword) {
+	    List<Employee> employee = employeeService.listAll(keyword);
+	    model.addAttribute("employees", employee);
+	    model.addAttribute("keyword", keyword);	         
+	    return "dashboard";
 	    }
+	
+	@GetMapping("/search")
+    public String searchAttendance(Model model, @Param("keyword") String keyword) {
+        List<Attendance> attendance = attendanceService.listAll(keyword);
+        model.addAttribute("attendances", attendance);
+        model.addAttribute("keyword", keyword);	         
+        return "attendance";
+    }
+	
+//	@GetMapping("/search")
+//    public String daysOff(Model model, @Param("keyword") String keyword) {
+//        List<Attendance> attendance = attendanceService.listAll(keyword);
+//        model.addAttribute("attendances", attendance);
+//        model.addAttribute("keyword", keyword);	         
+//        return "attendance";
+//    }
+	
+	@GetMapping("/showFormForDaysOff")
+	public String showDaysOff(Model model) {
+		List<DaysOff> daysOff = daysOFfService.getAll();
+		model.addAttribute("daysOff", daysOff);
+		return "days_off";
+	}
+	
+	@GetMapping("/updateFormForDaysOff/{id}/{did}")
+	public String confirm(@PathVariable Integer id, @PathVariable Integer did,Model model) {	
+		DaysOff daysOff = daysOFfService.getById(id);	
+		model.addAttribute("daysOff", daysOff);
+		return "add_status";
+	}
+	
+	@PostMapping("/updateFormForDaysOff")
+	public String update(DaysOff daysOff) {	
+		daysOFfService.updateStatusFomr(daysOff.getId(),daysOff.getEmployee().getId(),daysOff);
+		return "redirect:/showFormForDaysOff";
+	}
+	
+	
 }

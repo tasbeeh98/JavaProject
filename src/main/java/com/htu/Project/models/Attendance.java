@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -29,7 +32,8 @@ public class Attendance {
 	
 	private Date dayDate;
 	
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="employee_id", referencedColumnName="id")
 	private Employee employee;
 	

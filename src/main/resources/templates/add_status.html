@@ -129,16 +129,19 @@ body{
 	<div class="main_content">
 	 <div class="header"><h1>Attendance Management System</h1></div>  
         <div class="info">
-		<h2>Update Employee</h2>
-		<form action="#" th:action="@{/saveEmployee}" th:object="${employee}" method="POST">
+		<h2>Update Status</h2>
+		<form action="#" th:action="@{/updateFormForDaysOff}" th:object="${daysOff}" method="POST">
 			<input type="hidden" th:field="*{id}" />
-			<input type="text" th:field="*{name}" class="form-control mb-4 col-4">
-			<input type="text" th:field="*{phoneNumber}" class="form-control mb-4 col-4">
-			<input type="text" th:field="*{email}" class="form-control mb-4 col-4">
-			<button type="submit" class="btn btn-info col-2"> Update Employee</button>
+			<input type="text" th:field="*{description}" class="form-control mb-4 col-4" disabled>
+			<input type="text" th:field="*{dayDate}" class="form-control mb-4 col-4" disabled>
+			<input type="text" th:field="*{status}" class="form-control mb-4 col-4">
+			<input type="hidden" th:field="*{employee}" />
+			
+			
+			<button type="submit" class="btn btn-info col-2"> Update Status</button>
 		</form>
 		<hr>
-		<a th:href = "@{/dashboard}"> Back to Employee List</a>
+		<a th:href = "@{/showFormForDaysOff}"> Back to Days List</a>
 	</div>
 	</div>
 </body>
