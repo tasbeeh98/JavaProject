@@ -24,4 +24,6 @@ public interface DaysOffRepository extends CrudRepository <DaysOff, Integer>{
 	@Query("update days_off set status = :status where employee_id = :employee_id and id = :id")
 	public void updateTheStatusForm(@Param(value = "id") Integer id ,@Param(value = "employee_id") Integer employee_id, @Param(value = "status") String status);
 
+	@Query("SELECT a FROM days_off a JOIN a.employee e WHERE CONCAT(e.id, '  ', e.name, '  ',a.description, ' ' , a.dayDate) LIKE %?1%")
+	public List<DaysOff> searchDaysOff(String keyword);
 }

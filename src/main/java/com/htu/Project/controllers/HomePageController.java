@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.htu.Project.models.Attendance;
 import com.htu.Project.models.DaysOff;
 import com.htu.Project.models.Employee;
@@ -26,12 +29,22 @@ public class HomePageController {
 	
 	@Autowired
 	AttendanceService attendanceService;
+	
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		return new ModelAndView("login");
+	}
 		
-	@GetMapping("/dashboard")
+	@RequestMapping("/dashboard")
 	public String getAllEmployee(Model model) {
 		List <Employee>  employee =employeeService.getAllEmployee();
 		model.addAttribute("employees", employee);
 		return "dashboard";
+	}
+	
+	@RequestMapping("/user_dashboard")
+	public String user_dashboard() {
+		return "user_dashboard";
 	}
 	
 	@GetMapping("/all-attendance")
@@ -66,12 +79,14 @@ public class HomePageController {
 		this.employeeService.deleteEmployeeById(id);
 		return "redirect:/dashboard";
 	}
-
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-	}
 	
+	@GetMapping("/showFormForDaysOff")
+	public String showDaysOff(Model model) {
+		List<DaysOff> daysOff = daysOFfService.getAll();
+		model.addAttribute("daysOff", daysOff);
+		return "days_off";
+	}
+
 	@GetMapping("/")
 	public String viewHomePage(Model model, @Param("keyword") String keyword) {
 	    List<Employee> employee = employeeService.listAll(keyword);
@@ -80,28 +95,21 @@ public class HomePageController {
 	    return "dashboard";
 	    }
 	
-	@GetMapping("/search")
+	@GetMapping("/att")
     public String searchAttendance(Model model, @Param("keyword") String keyword) {
         List<Attendance> attendance = attendanceService.listAll(keyword);
-        model.addAttribute("attendances", attendance);
+		model.addAttribute("attendances", attendance);
         model.addAttribute("keyword", keyword);	         
         return "attendance";
     }
 	
-//	@GetMapping("/search")
-//    public String daysOff(Model model, @Param("keyword") String keyword) {
-//        List<Attendance> attendance = attendanceService.listAll(keyword);
-//        model.addAttribute("attendances", attendance);
-//        model.addAttribute("keyword", keyword);	         
-//        return "attendance";
-//    }
-	
-	@GetMapping("/showFormForDaysOff")
-	public String showDaysOff(Model model) {
-		List<DaysOff> daysOff = daysOFfService.getAll();
+	@GetMapping("/off")
+    public String daysOff(Model model, @Param("keyword") String keyword) {
+        List<DaysOff> daysOff = daysOFfService.listAll(keyword);
 		model.addAttribute("daysOff", daysOff);
-		return "days_off";
-	}
+        model.addAttribute("keyword", keyword);	         
+        return "days_off";
+    }
 	
 	@GetMapping("/updateFormForDaysOff/{id}/{did}")
 	public String confirm(@PathVariable Integer id, @PathVariable Integer did,Model model) {	

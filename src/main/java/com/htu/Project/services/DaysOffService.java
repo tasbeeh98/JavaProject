@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.htu.Project.models.Attendance;
 import com.htu.Project.models.DaysOff;
 import com.htu.Project.models.Employee;
 import com.htu.Project.repositories.DaysOffRepository;
@@ -47,5 +49,12 @@ public class DaysOffService {
 		daysOffRepository.updateTheStatusForm(id,did,daysOffRequest.getStatus());
 		return daysOffRequest.getStatus();
 	}
+	
+	public List<DaysOff> listAll(String keyword) {
+        if (keyword != null) {
+            return daysOffRepository.searchDaysOff(keyword);	            
+        }
+        return daysOffRepository.findAll();
+ }
 	
 }
