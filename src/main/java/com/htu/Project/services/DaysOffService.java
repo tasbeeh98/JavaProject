@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import com.htu.Project.models.Attendance;
 import com.htu.Project.models.DaysOff;
 import com.htu.Project.models.Employee;
 import com.htu.Project.repositories.DaysOffRepository;
@@ -32,7 +30,7 @@ public class DaysOffService {
 		}
 		throw new ResponseStatusException(
 				HttpStatus.NOT_FOUND,"Not Found");			
-}
+	}
 		
 	public DaysOff create(DaysOff daysOff,Integer id) {
 		Employee employee = employeeService.getEmployeeById(id);
@@ -55,6 +53,6 @@ public class DaysOffService {
             return daysOffRepository.searchDaysOff(keyword);	            
         }
         return daysOffRepository.findAll();
- }
+	}
 	
 }
