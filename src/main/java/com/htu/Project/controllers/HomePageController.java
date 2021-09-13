@@ -26,13 +26,6 @@ public class HomePageController {
 	
 	@Autowired
 	AttendanceService attendanceService;
-	
-	@GetMapping("/home-home")
-	public String getAllEmployees(Model model) {
-		List <Employee>  employee =employeeService.getAllEmployee();
-		model.addAttribute("employees", employee);
-		return "home";
-	}
 		
 	@GetMapping("/dashboard")
 	public String getAllEmployee(Model model) {
@@ -75,7 +68,7 @@ public class HomePageController {
 	}
 
 	@GetMapping("/login")
-	public String nh() {
+	public String login() {
 		return "login";
 	}
 	
@@ -121,7 +114,5 @@ public class HomePageController {
 	public String update(DaysOff daysOff) {	
 		daysOFfService.updateStatusFomr(daysOff.getId(),daysOff.getEmployee().getId(),daysOff);
 		return "redirect:/showFormForDaysOff";
-	}
-	
-	
+	}	
 }
